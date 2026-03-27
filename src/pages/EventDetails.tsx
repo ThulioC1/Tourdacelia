@@ -123,40 +123,40 @@ const EventDetails: React.FC = () => {
       <div className="container" style={{ padding: '4rem 1.5rem', display: 'flex', gap: '4rem', flexWrap: 'wrap' }}>
         <div style={{ flex: '1 1 600px' }}>
           <h2 className="title-lg mb-6">Sobre o <span className="text-primary">Percurso</span></h2>
-          <p className="text-muted mb-12" style={{ fontSize: '1.15rem', lineHeight: 1.8, maxWidth: '800px' }}>
+          <p className="text-muted" style={{ fontSize: '1.2rem', lineHeight: 1.8, maxWidth: '850px', marginBottom: '60px' }}>
             {event.description}
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mb-20">
-            <div className="glass-card flex items-center gap-6 p-8" style={{ background: '#f9f9fb', border: '1px solid var(--color-border)' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-12" style={{ marginBottom: '80px' }}>
+            <div className="glass-card flex items-center gap-6 p-10" style={{ background: '#f9f9fb', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-xl)' }}>
               <div style={{ background: 'var(--color-primary-light)', padding: '1.5rem', borderRadius: '50%' }}>
-                <MapPin size={32} className="text-primary" />
+                <MapPin size={36} className="text-primary" />
               </div>
               <div>
-                <p className="text-muted" style={{ fontSize: '1rem', fontWeight: 500, marginBottom: '0.25rem' }}>Localização</p>
-                <p className="font-semibold" style={{ fontSize: '1.25rem' }}>{event.location}</p>
+                <p className="text-muted" style={{ fontSize: '1rem', fontWeight: 500, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Localização</p>
+                <p className="font-semibold" style={{ fontSize: '1.4rem' }}>{event.location}</p>
               </div>
             </div>
             
-            <div className="glass-card flex items-center gap-6 p-8" style={{ background: '#f9f9fb', border: '1px solid var(--color-border)' }}>
+            <div className="glass-card flex items-center gap-6 p-10" style={{ background: '#f9f9fb', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-xl)' }}>
               <div style={{ background: 'var(--color-primary-light)', padding: '1.5rem', borderRadius: '50%' }}>
-                <Calendar size={32} className="text-primary" />
+                <Calendar size={36} className="text-primary" />
               </div>
               <div>
-                <p className="text-muted" style={{ fontSize: '1rem', fontWeight: 500, marginBottom: '0.25rem' }}>Data do Evento</p>
-                <p className="font-semibold" style={{ fontSize: '1.25rem' }}>{formatDate(event.date)}</p>
+                <p className="text-muted" style={{ fontSize: '1rem', fontWeight: 500, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Data do Evento</p>
+                <p className="font-semibold" style={{ fontSize: '1.4rem' }}>{formatDate(event.date)}</p>
               </div>
             </div>
           </div>
 
           {/* Sponsors Section */}
           {event.sponsors && event.sponsors.length > 0 && (
-            <div className="mt-24 pt-12" style={{ borderTop: '2px solid var(--color-border)' }}>
-              <h3 className="title-md mb-10" style={{ fontSize: '1.5rem' }}>Nossos <span className="text-primary">Patrocinadores</span></h3>
+            <div className="pt-20" style={{ borderTop: '2px solid var(--color-border)', marginTop: '100px' }}>
+              <h3 className="title-md" style={{ fontSize: '1.8rem', marginBottom: '40px' }}>Nossos <span className="text-primary">Patrocinadores</span></h3>
               <div className="flex flex-wrap gap-8 items-center">
                 {event.sponsors.map((sponsor, idx) => (
-                  <div key={idx} className="glass-card" style={{ padding: '1rem 2.5rem', background: '#ffffff', borderRadius: '99px', border: '1.5px solid var(--color-border)' }}>
-                    <span style={{ fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '1rem' }}>{sponsor}</span>
+                  <div key={idx} className="glass-card" style={{ padding: '1.25rem 3rem', background: '#ffffff', borderRadius: '99px', border: '2px solid var(--color-border)', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+                    <span style={{ fontWeight: 800, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '1.1rem' }}>{sponsor}</span>
                   </div>
                 ))}
               </div>
