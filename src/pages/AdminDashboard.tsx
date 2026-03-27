@@ -184,7 +184,7 @@ const AdminDashboard: React.FC = () => {
             <div className="glass-card animate-fade-in mb-8" style={{ borderTop: '4px solid var(--color-primary)' }}>
               <div className="flex justify-between items-center mb-6">
                 <h2 className="title-md">{editingId ? 'Editar Evento' : 'Criar Novo Evento'}</h2>
-                <button className="btn btn-secondary" onClick={resetForm}><X size={18} /></button>
+                <button className="btn btn-secondary p-2" onClick={resetForm}><X size={20} /></button>
               </div>
 
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -274,9 +274,11 @@ const AdminDashboard: React.FC = () => {
                     ))}
                   </div>
 
-                  <button type="submit" className="btn btn-primary w-full" style={{ padding: '1rem' }}>
-                    <CheckCircle2 size={20} /> {editingId ? 'Salvar Alterações' : 'Publicar Evento'}
-                  </button>
+                  <div className="mt-10">
+                    <button type="submit" className="btn btn-primary w-full" style={{ padding: '1.2rem' }}>
+                      <CheckCircle2 size={22} /> {editingId ? 'Salvar Alterações' : 'Publicar Evento'}
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

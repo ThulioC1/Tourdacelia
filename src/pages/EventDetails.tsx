@@ -195,9 +195,13 @@ const EventDetails: React.FC = () => {
                           {field.options?.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                         </select>
                       ) : (field.type === 'checkbox' || field.type === 'radio') ? (
-                        <div className="grid grid-cols-1 gap-2 mt-2">
+                        <div className="grid grid-cols-1 gap-3 mt-3">
                           {field.options?.map(opt => (
-                            <label key={opt} className="flex items-center gap-3 p-3 glass-card" style={{ cursor: 'pointer', background: formData[field.id]?.split(',').includes(opt) ? 'var(--color-primary-light)' : '#f9f9fb' }}>
+                            <label key={opt} className="flex items-center gap-3 p-4 glass-card" style={{ 
+                              cursor: 'pointer', 
+                              background: formData[field.id]?.split(',').includes(opt) ? 'var(--color-primary-light)' : '#f9f9fb',
+                              border: formData[field.id]?.split(',').includes(opt) ? '1.5px solid var(--color-primary)' : '1.5px solid var(--color-border)'
+                            }}>
                               <input 
                                 type={field.type} 
                                 name={field.id}
@@ -220,9 +224,9 @@ const EventDetails: React.FC = () => {
                       )}
                     </div>
                   ))}
-                  <div className="flex justify-end gap-4 mt-8">
-                    <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)}>Cancelar</button>
-                    <button type="submit" className="btn btn-primary">Confirmar Inscrição</button>
+                  <div className="flex flex-wrap items-center justify-end gap-6 mt-10">
+                    <button type="button" className="btn btn-secondary" style={{ padding: '0.8rem 2rem' }} onClick={() => setIsModalOpen(false)}>Cancelar</button>
+                    <button type="submit" className="btn btn-primary" style={{ padding: '0.8rem 2.5rem' }}>Confirmar Inscrição</button>
                   </div>
                 </form>
               </>
