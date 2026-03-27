@@ -170,15 +170,8 @@ const EventDetails: React.FC = () => {
       </div>
 
       {isModalOpen && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(12px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          zIndex: 100,
-          padding: '1.5rem'
-        }}>
-          <div className="glass-card animate-fade-in" style={{ width: '100%', maxWidth: '500px', background: '#ffffff', border: '1px solid var(--color-primary-light)', maxHeight: '90vh', overflowY: 'auto' }}>
+        <div className="modal-overlay">
+          <div className="modal-content animate-fade-in" style={{ borderRadius: 'var(--radius-xl)' }}>
             {isSubmitted ? (
                <div className="text-center p-6">
                  <CheckCircle2 size={64} className="text-success mb-4 mx-auto" />

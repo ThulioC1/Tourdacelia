@@ -193,7 +193,7 @@ const AdminDashboard: React.FC = () => {
                     <label className="form-label">Título do Evento</label>
                     <input required type="text" className="form-input" value={title} onChange={e => setTitle(e.target.value)} />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="form-group">
                       <label className="form-label">Data</label>
                       <input required type="date" className="form-input" value={date} onChange={e => setDate(e.target.value)} />
@@ -238,9 +238,9 @@ const AdminDashboard: React.FC = () => {
                   <div className="flex flex-col gap-3 mb-8">
                     {fields.map((field, idx) => (
                       <div key={idx} className="flex flex-col gap-2 p-3 glass-card" style={{ background: '#ffffff' }}>
-                        <div className="flex gap-2 items-center">
-                          <input type="text" className="form-input" placeholder="Nome" value={field.name} onChange={e => updateField(idx, 'name', e.target.value)} />
-                          <select className="form-input" style={{ width: '100px' }} value={field.type} onChange={e => updateField(idx, 'type', e.target.value as any)}>
+                        <div className="flex flex-wrap gap-2 items-center">
+                          <input type="text" className="form-input" style={{ flex: '1 1 150px' }} placeholder="Nome" value={field.name} onChange={e => updateField(idx, 'name', e.target.value)} />
+                          <select className="form-input" style={{ width: 'auto', flex: '0 0 100px' }} value={field.type} onChange={e => updateField(idx, 'type', e.target.value as any)}>
                             <option value="text">Texto</option>
                             <option value="tel">Tel</option>
                             <option value="email">Email</option>
@@ -251,7 +251,7 @@ const AdminDashboard: React.FC = () => {
                           <button type="button" onClick={() => {
                             const updated = fields.filter((_, i) => i !== idx);
                             setFields(updated);
-                          }} className="text-error"><X size={16} /></button>
+                          }} className="text-error p-2"><X size={18} /></button>
                         </div>
                         {(field.type === 'select' || field.type === 'checkbox' || field.type === 'radio') && (
                           <div className="form-group mb-2">
