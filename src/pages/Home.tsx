@@ -14,6 +14,11 @@ const Home: React.FC = () => {
     });
   }, []);
 
+  const formatDate = (dateStr: string) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('pt-BR');
+  };
+
   return (
     <div className="animate-fade-in">
       <section className="hero" style={{
@@ -63,7 +68,7 @@ const Home: React.FC = () => {
                   <span className="badge badge-primary">{event.distance}</span>
                   <div className="flex items-center gap-2 text-muted" style={{ fontSize: '0.9rem' }}>
                     <Calendar size={16} />
-                    {new Date(event.date).toLocaleDateString('pt-BR')}
+                    {formatDate(event.date)}
                   </div>
                 </div>
                 <h3 className="title-md mb-2">{event.title}</h3>

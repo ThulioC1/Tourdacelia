@@ -13,6 +13,12 @@ const EventDetails: React.FC = () => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const formatDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('pt-BR');
+  };
+
   useEffect(() => {
     if (id) {
       dbService.getEventById(id).then(data => {
@@ -108,7 +114,7 @@ const EventDetails: React.FC = () => {
           </Link>
           <div className="flex items-center gap-4 mb-4" style={{ flexWrap: 'wrap' }}>
             <span className="badge badge-primary">{event.distance}</span>
-            <span className="badge badge-secondary">{new Date(event.date).toLocaleDateString('pt-BR')}</span>
+            <span className="badge badge-secondary">{formatDate(event.date)}</span>
           </div>
           <h1 className="title-xl">{event.title}</h1>
         </div>
@@ -138,7 +144,7 @@ const EventDetails: React.FC = () => {
               </div>
               <div>
                 <p className="text-muted" style={{ fontSize: '0.9rem' }}>Data do Evento</p>
-                <p className="font-semibold">{new Date(event.date).toLocaleDateString('pt-BR')}</p>
+                <p className="font-semibold">{formatDate(event.date)}</p>
               </div>
             </div>
           </div>
