@@ -127,36 +127,36 @@ const EventDetails: React.FC = () => {
             {event.description}
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="glass-card flex items-center gap-4">
-              <div style={{ background: 'var(--color-primary-light)', padding: '1rem', borderRadius: '50%' }}>
-                <MapPin size={24} className="text-primary" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+            <div className="glass-card flex items-center gap-5 p-6" style={{ background: '#f9f9fb' }}>
+              <div style={{ background: 'var(--color-primary-light)', padding: '1.25rem', borderRadius: '50%' }}>
+                <MapPin size={28} className="text-primary" />
               </div>
               <div>
-                <p className="text-muted" style={{ fontSize: '0.9rem' }}>Localização</p>
-                <p className="font-semibold">{event.location}</p>
+                <p className="text-muted" style={{ fontSize: '0.95rem', fontWeight: 500 }}>Localização</p>
+                <p className="font-semibold" style={{ fontSize: '1.1rem' }}>{event.location}</p>
               </div>
             </div>
             
-            <div className="glass-card flex items-center gap-4">
-              <div style={{ background: 'var(--color-primary-light)', padding: '1rem', borderRadius: '50%' }}>
-                <Calendar size={24} className="text-primary" />
+            <div className="glass-card flex items-center gap-5 p-6" style={{ background: '#f9f9fb' }}>
+              <div style={{ background: 'var(--color-primary-light)', padding: '1.25rem', borderRadius: '50%' }}>
+                <Calendar size={28} className="text-primary" />
               </div>
               <div>
-                <p className="text-muted" style={{ fontSize: '0.9rem' }}>Data do Evento</p>
-                <p className="font-semibold">{formatDate(event.date)}</p>
+                <p className="text-muted" style={{ fontSize: '0.95rem', fontWeight: 500 }}>Data do Evento</p>
+                <p className="font-semibold" style={{ fontSize: '1.1rem' }}>{formatDate(event.date)}</p>
               </div>
             </div>
           </div>
 
           {/* Sponsors Section */}
           {event.sponsors && event.sponsors.length > 0 && (
-            <div className="mt-12">
-              <h3 className="title-md mb-6">Nossos <span className="text-primary">Patrocinadores</span></h3>
-              <div className="flex flex-wrap gap-8 items-center">
+            <div className="mt-16 pt-8" style={{ borderTop: '1px solid var(--color-border)' }}>
+              <h3 className="title-md mb-8">Nossos <span className="text-primary">Patrocinadores</span></h3>
+              <div className="flex flex-wrap gap-6 items-center">
                 {event.sponsors.map((sponsor, idx) => (
-                  <div key={idx} className="glass-card" style={{ padding: '0.75rem 1.5rem', background: '#f9f9fb' }}>
-                    <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>{sponsor}</span>
+                  <div key={idx} className="glass-card" style={{ padding: '0.85rem 2rem', background: '#f9f9fb', borderRadius: '99px' }}>
+                    <span style={{ fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.9rem' }}>{sponsor}</span>
                   </div>
                 ))}
               </div>
