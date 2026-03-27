@@ -244,12 +244,26 @@ const AdminDashboard: React.FC = () => {
                             <option value="text">Texto</option>
                             <option value="tel">Tel</option>
                             <option value="email">Email</option>
+                            <option value="checkbox">Multi-Escolha</option>
+                            <option value="radio">Única Escolha</option>
+                            <option value="select">Lista (Select)</option>
                           </select>
                           <button type="button" onClick={() => {
                             const updated = fields.filter((_, i) => i !== idx);
                             setFields(updated);
                           }} className="text-error"><X size={16} /></button>
                         </div>
+                        {(field.type === 'select' || field.type === 'checkbox' || field.type === 'radio') && (
+                          <div className="form-group mb-2">
+                             <input 
+                               type="text" 
+                               className="form-input text-sm" 
+                               placeholder="Opções (separadas por vírgula)" 
+                               value={field.options?.join(', ') || ''} 
+                               onChange={e => updateField(idx, 'options', e.target.value.split(',').map(o => o.trim()))} 
+                             />
+                          </div>
+                        )}
                         <div className="flex gap-2 items-center">
                           <input type="text" className="form-input text-sm" style={{ padding: '0.4rem 0.8rem' }} placeholder="ID Google Form (ex: entry.1234)" value={(field as any).googleEntryId || ''} onChange={e => updateField(idx, 'googleEntryId' as any, e.target.value)} />
                           <label className="flex items-center gap-1 text-xs text-muted">

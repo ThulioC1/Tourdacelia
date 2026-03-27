@@ -14,9 +14,10 @@ import { db } from "../firebase.ts";
 export interface EventRegistrationField {
   id: string;
   name: string;
-  type: 'text' | 'email' | 'tel' | 'number' | 'select';
+  type: 'text' | 'email' | 'tel' | 'number' | 'select' | 'checkbox' | 'radio';
   required: boolean;
-  options?: string[];
+  options?: string[]; // Para select, checkbox ou radio
+  googleEntryId?: string; // ID do campo no Google Forms
 }
 
 export interface CyclingEvent {

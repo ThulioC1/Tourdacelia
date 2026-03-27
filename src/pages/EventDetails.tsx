@@ -37,6 +37,12 @@ const EventDetails: React.FC = () => {
     setFormData(prev => ({ ...prev, [fieldId]: value }));
   };
 
+  const handleCheckboxChange = (fieldId: string, option: string, checked: boolean) => {
+    const current = formData[fieldId]?.split(',').filter(x => x) || [];
+    const updated = checked ? [...current, option] : current.filter(x => x !== option);
+    handleInputChange(fieldId, updated.join(','));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (event) {
@@ -49,19 +55,31 @@ const EventDetails: React.FC = () => {
 
       // 2. Feed Google Form if configured
       if (event.googleFormsUrl) {
-        const params = new URLSearchParams();
-        
+        const formAction = event.googleFormsUrl.replace('/viewform', '/formResponse'); // Action URL
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = formAction;
+        hiddenForm.target = 'silent-google-form';
+        hiddenForm.style.display = 'none';
+
         event.registrationFields.forEach(field => {
           const entryId = (field as any).googleEntryId;
           const value = formData[field.id];
           if (entryId && value) {
-            params.append(entryId, value);
+             // Google Forms checkboxes can share the same entryId for multiple values
+             const values = value.split(',');
+             values.forEach(val => {
+               const input = document.createElement('input');
+               input.name = entryId;
+               input.value = val;
+               hiddenForm.appendChild(input);
+             });
           }
         });
 
-        // Redirect to pre-filled Google Form
-        const prefilledUrl = `${event.googleFormsUrl}?${params.toString()}`;
-        window.open(prefilledUrl, '_blank');
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+        document.body.removeChild(hiddenForm);
       }
 
       setIsSubmitted(true);
@@ -70,6 +88,8 @@ const EventDetails: React.FC = () => {
 
   return (
     <div className="animate-fade-in">
+      <iframe name="silent-google-form" style={{ display: 'none' }}></iframe>
+
       {/* Header Banner */}
       <div style={{
         height: '40vh',
@@ -95,7 +115,6 @@ const EventDetails: React.FC = () => {
       </div>
 
       <div className="container" style={{ padding: '4rem 1.5rem', display: 'flex', gap: '4rem', flexWrap: 'wrap' }}>
-        {/* Main Content */}
         <div style={{ flex: '1 1 600px' }}>
           <h2 className="title-lg mb-6">Sobre o <span className="text-primary">Percurso</span></h2>
           <p className="text-muted mb-8" style={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
@@ -104,7 +123,7 @@ const EventDetails: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="glass-card flex items-center gap-4">
-              <div style={{ background: 'rgba(250, 204, 21, 0.2)', padding: '1rem', borderRadius: '50%' }}>
+              <div style={{ background: 'var(--color-primary-light)', padding: '1rem', borderRadius: '50%' }}>
                 <MapPin size={24} className="text-primary" />
               </div>
               <div>
@@ -139,24 +158,17 @@ const EventDetails: React.FC = () => {
           )}
         </div>
 
-        {/* Sidebar */}
         <div style={{ flex: '1 1 350px', maxWidth: '450px' }}>
           <div className="glass-card" style={{ position: 'sticky', top: '100px' }}>
             <h3 className="title-md mb-2">Inscrições Abertas</h3>
             <p className="text-muted mb-6">Garanta sua vaga neste evento exclusivo do Tour da Célia.</p>
-            
-            <button 
-              className="btn btn-primary w-full" 
-              style={{ fontSize: '1.2rem', padding: '1rem' }}
-              onClick={() => setIsModalOpen(true)}
-            >
+            <button className="btn btn-primary w-full" onClick={() => setIsModalOpen(true)}>
               Inscreva-se Agora
             </button>
           </div>
         </div>
       </div>
 
-      {/* Registration Modal */}
       {isModalOpen && (
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -166,12 +178,12 @@ const EventDetails: React.FC = () => {
           zIndex: 100,
           padding: '1.5rem'
         }}>
-          <div className="glass-card animate-fade-in" style={{ width: '100%', maxWidth: '500px', background: '#ffffff', border: '1px solid var(--color-primary-light)' }}>
+          <div className="glass-card animate-fade-in" style={{ width: '100%', maxWidth: '500px', background: '#ffffff', border: '1px solid var(--color-primary-light)', maxHeight: '90vh', overflowY: 'auto' }}>
             {isSubmitted ? (
                <div className="text-center p-6">
-                 <CheckCircle2 size={64} className="text-success mb-4 mx-auto" style={{ color: 'var(--color-success)' }} />
+                 <CheckCircle2 size={64} className="text-success mb-4 mx-auto" />
                  <h2 className="title-md mb-2">Inscrição Confirmada!</h2>
-                 <p className="text-muted mb-6">Te aguardamos ansiosamente no {event.title}.</p>
+                 <p className="text-muted mb-6">Tudo pronto para o pedal. {event.googleFormsUrl && ' Seus dados também foram enviados para o Google Forms.'}</p>
                  <button className="btn btn-primary" onClick={() => setIsModalOpen(false)}>Fechar</button>
                </div>
             ) : (
@@ -179,29 +191,39 @@ const EventDetails: React.FC = () => {
                 <h2 className="title-md mb-4">Formulário de Inscrição</h2>
                 <form onSubmit={handleSubmit}>
                   {event.registrationFields.map(field => (
-                    <div className="form-group" key={field.id}>
+                    <div className="form-group mb-6" key={field.id}>
                       <label className="form-label">
                         {field.name} {field.required && <span className="text-error" style={{ color: 'var(--color-error)' }}>*</span>}
                       </label>
+                      
                       {field.type === 'select' ? (
-                        <select 
-                          className="form-input" 
-                          required={field.required}
-                          value={formData[field.id] || ''}
-                          onChange={(e) => handleInputChange(field.id, e.target.value)}
-                        >
+                        <select className="form-input" required={field.required} value={formData[field.id] || ''} onChange={(e) => handleInputChange(field.id, e.target.value)}>
                           <option value="">Selecione...</option>
                           {field.options?.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                         </select>
+                      ) : (field.type === 'checkbox' || field.type === 'radio') ? (
+                        <div className="grid grid-cols-1 gap-2 mt-2">
+                          {field.options?.map(opt => (
+                            <label key={opt} className="flex items-center gap-3 p-3 glass-card" style={{ cursor: 'pointer', background: formData[field.id]?.split(',').includes(opt) ? 'var(--color-primary-light)' : '#f9f9fb' }}>
+                              <input 
+                                type={field.type} 
+                                name={field.id}
+                                required={field.required && field.type === 'radio' && !formData[field.id]}
+                                checked={formData[field.id]?.split(',').includes(opt) || false}
+                                onChange={(e) => {
+                                  if (field.type === 'radio') {
+                                    handleInputChange(field.id, opt);
+                                  } else {
+                                    handleCheckboxChange(field.id, opt, e.target.checked);
+                                  }
+                                }}
+                              />
+                              <span style={{ fontSize: '0.95rem' }}>{opt}</span>
+                            </label>
+                          ))}
+                        </div>
                       ) : (
-                        <input 
-                          type={field.type} 
-                          className="form-input" 
-                          required={field.required}
-                          placeholder={`Digite seu ${field.name.toLowerCase()}`}
-                          value={formData[field.id] || ''}
-                          onChange={(e) => handleInputChange(field.id, e.target.value)}
-                        />
+                        <input type={field.type} className="form-input" required={field.required} placeholder={`Digite seu ${field.name.toLowerCase()}`} value={formData[field.id] || ''} onChange={(e) => handleInputChange(field.id, e.target.value)} />
                       )}
                     </div>
                   ))}
