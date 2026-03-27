@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { Bike } from 'lucide-react';
 
 import Home from './pages/Home.tsx';
 import EventDetails from './pages/EventDetails.tsx';
@@ -12,18 +11,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="container">
         <Link to="/" className="logo">
-          <div className="logo-badge" style={{ 
-            width: '42px', height: '42px', 
-            border: '2px dashed var(--color-primary)', 
-            borderRadius: '50%', 
-            display: 'flex', alignItems: 'center', justifyContent: 'center' 
-          }}>
-            <Bike size={24} color="var(--color-primary)" />
-          </div>
-          <div>
-            <span className="tour-text">Tour</span>
-            <span style={{ fontWeight: 400, marginLeft: '4px', fontSize: '1.2rem' }}>da Célia</span>
-          </div>
+          <img src="/logo.png" alt="Tour da Célia" style={{ height: '70px', width: 'auto' }} />
         </Link>
         <div className="nav-links">
           <Link to="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem', borderRadius: '99px' }}>
