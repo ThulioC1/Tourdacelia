@@ -8,13 +8,17 @@ import './App.css';
 
 function Navbar() {
   return (
-    <nav className="navbar">
-      <div className="container">
-        <Link to="/" className="logo">
-          <img src="/logo.png" alt="Tour da Célia" style={{ height: '70px', width: 'auto' }} />
+    <nav className="navbar" style={{ display: 'flex', alignItems: 'center' }}>
+      <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+        <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <img src="/logo.png" alt="Logo" style={{ height: '60px', width: 'auto' }} />
+          <div style={{ display: 'flex', alignItems: 'baseline' }}>
+            <span style={{ fontFamily: 'var(--font-script)', color: 'var(--color-primary)', fontSize: '2rem' }}>Tour</span>
+            <span style={{ fontWeight: 600, marginLeft: '5px', fontSize: '1.4rem', color: 'var(--color-text)' }}>da Célia</span>
+          </div>
         </Link>
         <div className="nav-links">
-          <Link to="/admin" className="btn btn-secondary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem', borderRadius: '99px' }}>
+          <Link to="/admin" className="btn btn-secondary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem', borderRadius: '99px' }}>
             Área do Admin
           </Link>
         </div>
