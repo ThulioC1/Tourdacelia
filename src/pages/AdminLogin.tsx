@@ -29,22 +29,15 @@ const AdminLogin: React.FC = () => {
 
   return (
     <div className="container animate-fade-in" style={{ 
-      minHeight: '80vh', 
+      minHeight: '100vh', 
       display: 'flex', 
       alignItems: 'center', 
-      justifyContent: 'center' 
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #fff 0%, var(--color-primary-light) 100%)'
     }}>
       <div className="glass-card" style={{ width: '100%', maxWidth: '400px', padding: '2.5rem' }}>
         <div className="text-center mb-8">
-          <div style={{ 
-            background: 'var(--color-primary-light)', 
-            width: '64px', height: '64px', 
-            borderRadius: '50%', 
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 1rem auto'
-          }}>
-            <Lock size={32} color="var(--color-primary)" />
-          </div>
+          <img src="/logo.png" alt="Tour da Célia" style={{ height: '80px', margin: '0 auto 1.5rem auto', display: 'block' }} className="animate-scale-in" />
           <h1 className="title-md">Acesso Administrativo</h1>
           <p className="text-muted mt-2">Área restrita à organização</p>
         </div>

@@ -24,6 +24,7 @@ const AdminDashboard: React.FC = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [sponsorsRaw, setSponsorsRaw] = useState(''); // Comma separated
   const [googleFormsUrl, setGoogleFormsUrl] = useState('');
+  const [isSoldOut, setIsSoldOut] = useState(false);
   
   const [fields, setFields] = useState<EventRegistrationField[]>([
     { id: 'name', name: 'Nome Completo', type: 'text', required: true },
@@ -65,7 +66,7 @@ const AdminDashboard: React.FC = () => {
 
   const resetForm = () => {
     setTitle(''); setDate(''); setLocation(''); setDistance(''); setDescription(''); setImageUrl(''); 
-    setSponsorsRaw(''); setGoogleFormsUrl(''); setEditingId(null);
+    setSponsorsRaw(''); setGoogleFormsUrl(''); setIsSoldOut(false); setEditingId(null);
     setFields([
       { id: 'name', name: 'Nome Completo', type: 'text', required: true },
       { id: 'phone', name: 'Telefone/WhatsApp', type: 'tel', required: true }
@@ -83,6 +84,7 @@ const AdminDashboard: React.FC = () => {
     setImageUrl(event.imageUrl);
     setSponsorsRaw(event.sponsors?.join(', ') || '');
     setGoogleFormsUrl(event.googleFormsUrl || '');
+    setIsSoldOut(event.isSoldOut || false);
     setFields(event.registrationFields);
     setIsFormOpen(true);
   };
@@ -103,7 +105,8 @@ const AdminDashboard: React.FC = () => {
       status: 'upcoming',
       registrationFields: fields.filter(f => f.name.trim() !== ''),
       sponsors: sponsorsRaw.split(',').map(s => s.trim()).filter(s => s !== ''),
-      googleFormsUrl
+      googleFormsUrl,
+      isSoldOut
     };
 
     if (editingId) {
@@ -225,6 +228,17 @@ const AdminDashboard: React.FC = () => {
                   <div className="form-group">
                     <label className="form-label">Descrição</label>
                     <textarea required className="form-input" rows={4} value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                  </div>
+                  <div className="form-group" style={{ marginTop: '1.5rem' }}>
+                    <label className="flex items-center gap-3 cursor-pointer p-5 bg-white border-2 border-dashed rounded-xl" style={{ borderColor: isSoldOut ? 'var(--color-error)' : 'var(--color-border)', transition: 'all 0.3s' }}>
+                      <input type="checkbox" checked={isSoldOut} onChange={e => setIsSoldOut(e.target.checked)} style={{ width: '24px', height: '24px', accentColor: 'var(--color-error)' }} />
+                      <div>
+                        <p className="font-bold mb-0" style={{ color: isSoldOut ? 'var(--color-error)' : 'var(--color-text)', fontSize: '1rem' }}>
+                          {isSoldOut ? 'VAGAS ESGOTADAS (Inscrições bloqueadas)' : 'Vagas Disponíveis'}
+                        </p>
+                        <p className="text-xs text-muted">Marque para encerrar inscrições no site</p>
+                      </div>
+                    </label>
                   </div>
                 </div>
 

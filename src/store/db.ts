@@ -32,6 +32,7 @@ export interface CyclingEvent {
   registrationFields: EventRegistrationField[];
   sponsors?: string[]; // Added sponsors
   googleFormsUrl?: string; // Added Google Forms integration link
+  isSoldOut?: boolean;
 }
 
 export interface Registration {

@@ -55,8 +55,13 @@ const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event: CyclingEvent) => (
-            <Link to={`/event/${event.id}`} key={event.id} className="glass-card flex flex-col" style={{ padding: 0, overflow: 'hidden' }}>
+          {events.map((event: CyclingEvent, index: number) => (
+            <Link 
+              to={`/event/${event.id}`} 
+              key={event.id} 
+              className={`glass-card flex flex-col animate-slide-up delay-${(index % 5) + 1}`} 
+              style={{ padding: 0, overflow: 'hidden' }}
+            >
               <div style={{
                 height: '240px',
                 backgroundImage: `url(${event.imageUrl})`,
@@ -65,7 +70,10 @@ const Home: React.FC = () => {
               }}></div>
               <div className="p-6 flex-1 flex flex-col">
                 <div className="flex justify-between items-center mb-4">
-                  <span className="badge badge-primary">{event.distance}</span>
+                  <div className="flex gap-2">
+                    <span className="badge badge-primary">{event.distance}</span>
+                    {event.isSoldOut && <span className="badge badge-secondary" style={{ background: 'var(--color-error)', color: 'white' }}>ESGOTADO</span>}
+                  </div>
                   <div className="flex items-center gap-2 text-muted" style={{ fontSize: '0.9rem' }}>
                     <Calendar size={16} />
                     {formatDate(event.date)}
